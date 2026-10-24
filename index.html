@@ -1,0 +1,609 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>English 272</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Bengali:wght@400;600&display=swap">
+<style>
+/* Layout: one narrow column, a sticky tab bar, and a day-by-day study sheet with a 272-cell journey map. */
+:root{
+  --bg:#EDF0F3; --surface:#FFFFFF; --ink:#101C26; --muted:#566673; --line:#D3DAE1;
+  --accent:#0A6B63; --accent-ink:#FFFFFF; --mark:#F5CD3F; --ok:#1E8148; --bad:#B8342B; --soft:#E3EAEE;
+  --f-display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --f-body:'Instrument Sans','Segoe UI',system-ui,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --f-bn:'Noto Sans Bengali','Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D151C; --surface:#15212B; --ink:#E7EEF2; --muted:#93A3B0; --line:#263644;
+    --accent:#4FD1C0; --accent-ink:#06211E; --mark:#B8901A; --ok:#4CC27F; --bad:#F07C72; --soft:#1B2A36; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D151C; --surface:#15212B; --ink:#E7EEF2; --muted:#93A3B0; --line:#263644;
+  --accent:#4FD1C0; --accent-ink:#06211E; --mark:#B8901A; --ok:#4CC27F; --bad:#F07C72; --soft:#1B2A36; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;
+  padding-block:0 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--bg)}
+.wrap{max-width:860px;margin:0 auto}
+header{padding-top:28px;display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 24px}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(34px,7vw,52px);line-height:1;letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1 span{font-family:var(--f-mono);font-weight:500;font-size:.38em;letter-spacing:0;color:var(--muted);display:block;margin-bottom:8px}
+.stats{display:flex;gap:20px;font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.stats b{display:block;font-size:22px;color:var(--ink);font-weight:500}
+.bar{height:8px;background:var(--soft);border-radius:4px;margin:18px 0 0;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:4px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);display:flex;gap:4px;padding:14px 0 10px;overflow-x:auto;border-bottom:1px solid var(--line);margin-top:10px}
+nav a{padding:8px 14px;border-radius:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:15px;white-space:nowrap}
+nav a[aria-current="page"]{background:var(--ink);color:var(--bg)}
+nav a:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{padding-top:24px;display:grid;gap:28px}
+h2{font-family:var(--f-display);font-weight:700;font-size:24px;margin:0 0 4px;letter-spacing:-.01em;text-wrap:balance}
+.sub{color:var(--muted);margin:0 0 14px;font-size:15px}
+.hero{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px}
+.dayno{font-family:var(--f-display);font-weight:700;font-size:clamp(64px,16vw,112px);line-height:.9;letter-spacing:-.04em}
+.dayno small{font-family:var(--f-mono);font-size:.2em;font-weight:400;color:var(--muted);letter-spacing:0;margin-left:8px}
+.datebox{font-family:var(--f-mono);font-size:14px;color:var(--muted)}
+.datebox b{display:block;color:var(--ink);font-size:16px;font-weight:500}
+.pager{display:flex;gap:8px;margin-top:10px}
+.btn{font:inherit;font-weight:600;font-size:15px;padding:10px 16px;border-radius:8px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;text-decoration:none;display:inline-block;line-height:1.2}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.sm{padding:6px 12px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:default}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--f-mono);font-size:13px;padding:5px 11px;border-radius:99px;border:1px solid var(--line);color:var(--muted);background:var(--surface)}
+.chip.on{background:var(--ok);border-color:var(--ok);color:#fff}
+section.blk{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.stack{display:grid;gap:10px}
+.steps{display:grid;gap:8px;margin:12px 0 16px;padding:0;list-style:none;font-size:15px}
+.steps li{display:flex;gap:10px;align-items:baseline}
+.steps li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none;transform:translateY(-2px)}
+input[type=text],input[type=date],input[type=number],textarea{font:inherit;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+textarea{min-height:92px;resize:vertical}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row>input{flex:1 1 220px;min-width:0}
+.hl{background:linear-gradient(transparent 58%,var(--mark) 58%);padding:0 2px}
+details.wc{border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+details.wc summary{cursor:pointer;padding:12px 14px;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+details.wc summary::-webkit-details-marker{display:none}
+.w{font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:-.01em}
+.pos{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.wc .body{padding:0 14px 14px;display:grid;gap:4px}
+.ex{color:var(--muted);font-style:italic}
+.bn{font-family:var(--f-bn);font-size:19px;line-height:1.7}
+.tip{font-size:14px;color:var(--muted)}
+.quizq{font-family:var(--f-display);font-weight:700;font-size:22px;margin:6px 0 16px;text-wrap:balance}
+.opts{display:grid;gap:8px}
+.opt{font:inherit;text-align:left;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);cursor:pointer}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 18%,var(--bg))}
+.opt.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 18%,var(--bg))}
+.qmeta{font-family:var(--f-mono);font-size:13px;color:var(--muted);display:flex;justify-content:space-between}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px}
+.cell{font-family:var(--f-mono);font-size:12px;padding:9px 0;text-align:center;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.cell.v{background:color-mix(in srgb,var(--accent) 28%,var(--surface));color:var(--ink)}
+.cell.d{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.cell.t{outline:2px solid var(--ink);outline-offset:1px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:12px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;border:1px solid var(--line)}
+.lib{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+.libi{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:12px 14px;min-width:0}
+.libi p{margin:2px 0}
+.note{font-size:14px;color:var(--muted)}
+.ok{color:var(--ok);font-weight:600}
+@media (prefers-reduced-motion:no-preference){.bar i{transition:width .4s}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1><span id="hdr-sub">English Coach Chad · one video a day</span>English 272</h1>
+    <div class="stats" id="stats"></div>
+  </header>
+  <div class="bar" aria-hidden="true"><i id="bar" style="width:0%"></i></div>
+  <nav id="nav" aria-label="Sections"></nav>
+  <main id="main"></main>
+</div>
+
+<script>
+const TOTAL=272, CHANNEL='https://www.youtube.com/@EnglishCoachChad/videos';
+const WORDS=`abate|v|to become less intense|The storm abated by midnight.
+aberrant|adj|departing from what is normal|His aberrant behavior worried the team.
+abstruse|adj|hard to understand|The lecture was too abstruse for beginners.
+acumen|n|sharp judgment in practical matters|Her business acumen built the firm.
+admonish|v|to warn or scold gently|The coach admonished him for being late.
+aesthetic|adj|concerned with beauty|The cafe has a calm aesthetic appeal.
+alacrity|n|cheerful eagerness|She accepted the task with alacrity.
+altruistic|adj|selflessly concerned for others|An altruistic donor funded the school.
+ambivalent|adj|having mixed feelings|He felt ambivalent about moving abroad.
+ameliorate|v|to make something better|New rules ameliorated working conditions.
+anomaly|n|something that deviates from the norm|The data contained one clear anomaly.
+antipathy|n|strong dislike|He felt deep antipathy toward gossip.
+apathy|n|lack of interest or concern|Voter apathy was high this year.
+arduous|adj|requiring great effort|An arduous climb lay ahead of us.
+articulate|adj|expressing ideas clearly|An articulate speaker won the debate.
+ascetic|adj|living with strict self-denial|He led an ascetic life in the hills.
+assuage|v|to ease or relieve|Her kind words assuaged his fear.
+audacious|adj|boldly daring|Starting a company at nineteen was an audacious plan.
+austere|adj|severe and plain|The room was austere and almost bare.
+avarice|n|extreme greed for wealth|Avarice drove him to cheat his partners.
+banal|adj|boring because unoriginal|The movie had a banal plot.
+belligerent|adj|hostile and aggressive|A belligerent customer shouted at the staff.
+benevolent|adj|kind and generous|A benevolent uncle paid her tuition.
+bolster|v|to support or strengthen|Extra practice bolstered his confidence.
+bombastic|adj|pompous in speech|The bombastic speech impressed nobody.
+brevity|n|shortness of expression|Brevity is the soul of wit.
+burgeon|v|to grow rapidly|Online learning burgeoned after 2020.
+cacophony|n|a harsh mix of sounds|A cacophony of horns filled the street.
+candid|adj|honest and direct|Please give me your candid opinion.
+capricious|adj|changing mood unpredictably|The capricious weather ruined our plans.
+castigate|v|to criticize severely|The editor castigated the sloppy report.
+catalyst|n|something that speeds up change|The crisis was a catalyst for reform.
+caustic|adj|biting and sarcastic|Her caustic remarks hurt his feelings.
+censure|v|to express strong disapproval|The board censured the manager.
+circumspect|adj|careful to consider consequences|Be circumspect when signing contracts.
+clandestine|adj|kept secret|A clandestine meeting took place at night.
+cogent|adj|clear, logical and convincing|A cogent argument won the case.
+complacent|adj|smugly self-satisfied|Success made him complacent.
+conciliate|v|to win over or pacify|He tried to conciliate the angry client.
+concise|adj|brief but complete|Write a concise summary of the chapter.
+condone|v|to accept or overlook wrongdoing|The school does not condone cheating.
+conundrum|n|a confusing problem|The budget was a real conundrum.
+convoluted|adj|extremely complex|A convoluted plot confused the readers.
+corroborate|v|to confirm with evidence|Witnesses corroborated her story.
+credulous|adj|too ready to believe|Credulous buyers fell for the scam.
+cursory|adj|hasty and not thorough|He gave the report a cursory glance.
+dearth|n|a scarcity|A dearth of jobs pushed the youth abroad.
+debilitate|v|to weaken|The illness debilitated him for months.
+decorum|n|proper behavior|Please maintain decorum in the classroom.
+deference|n|respectful submission|He spoke with deference to his elders.
+delineate|v|to describe precisely|The contract delineates each duty.
+denigrate|v|to criticize unfairly|Do not denigrate your rivals.
+deride|v|to mock|Critics derided the proposal.
+desiccate|v|to dry out completely|The sun desiccated the soil.
+despot|n|a ruler with absolute power|The despot silenced the press.
+diatribe|n|a bitter verbal attack|He launched into a diatribe against taxes.
+diffident|adj|shy and lacking self-confidence|A diffident student rarely spoke up.
+digress|v|to stray from the main topic|Let me digress for a moment.
+diligent|adj|hard-working and careful|A diligent learner improves every day.
+discern|v|to perceive clearly|She could discern a pattern in the numbers.
+disparage|v|to belittle|Never disparage another person's effort.
+disparate|adj|fundamentally different|Disparate groups formed one strong team.
+dissemble|v|to hide true feelings|He dissembled to avoid blame.
+dogmatic|adj|asserting opinions as undeniable truth|A dogmatic leader rejects all debate.
+eclectic|adj|drawing from many sources|Her taste in music is eclectic.
+efficacy|n|ability to produce a desired result|Trials proved the drug's efficacy.
+eloquent|adj|fluent and persuasive|An eloquent speaker moved the crowd.
+elusive|adj|hard to find or catch|Success proved elusive for years.
+emulate|v|to imitate in order to equal or excel|Students often emulate their mentors.
+enervate|v|to drain of energy|The heat enervated the hikers.
+ephemeral|adj|lasting a very short time|Fame is often ephemeral.
+equivocal|adj|open to more than one meaning|His answer was equivocal.
+erudite|adj|having great learning|An erudite professor gave the lecture.
+esoteric|adj|understood by only a few|Esoteric jargon excluded the newcomers.
+eulogy|n|a speech praising someone, often at a funeral|He delivered a moving eulogy.
+exacerbate|v|to make worse|Stress can exacerbate headaches.
+exemplary|adj|serving as a model|Her exemplary conduct earned praise.
+exonerate|v|to clear of blame|The evidence exonerated him.
+expedite|v|to speed up|Please expedite my application.
+extol|v|to praise highly|Reviewers extolled the novel.
+facetious|adj|joking at an inappropriate time|A facetious remark upset her.
+fastidious|adj|very attentive to detail|A fastidious editor spots every typo.
+fervent|adj|passionate|He is a fervent supporter of reform.
+fickle|adj|changing often without reason|Fickle fans left the team.
+flagrant|adj|obviously and shockingly wrong|It was a flagrant violation of the rules.
+florid|adj|overly ornate|Florid prose tires readers.
+fortuitous|adj|happening by lucky chance|A fortuitous meeting led to a job.
+frugal|adj|careful with money|A frugal student saved for college.
+futile|adj|pointless|Resistance was futile.
+garrulous|adj|excessively talkative|A garrulous neighbor chatted for hours.
+gregarious|adj|sociable|She is gregarious and loves parties.
+guile|n|cunning|He won through guile, not skill.
+hackneyed|adj|overused and unoriginal|Avoid hackneyed phrases in essays.
+haughty|adj|arrogantly superior|A haughty glance dismissed him.
+hedonist|n|a pleasure-seeker|A hedonist avoids hard work.
+heterogeneous|adj|diverse in content|A heterogeneous crowd gathered in the square.
+hypocrisy|n|pretending to virtues one lacks|Her hypocrisy was obvious to everyone.
+iconoclast|n|one who attacks cherished beliefs|The iconoclast mocked every tradition.
+idiosyncrasy|n|a peculiar personal habit|Chewing pens is his idiosyncrasy.
+immutable|adj|unchangeable|The laws of physics are immutable.
+impartial|adj|fair and unbiased|A judge must be impartial.
+impeccable|adj|flawless|Her English is impeccable.
+impetuous|adj|acting without thought|An impetuous decision cost him dearly.
+implacable|adj|impossible to appease|He was an implacable foe.
+incessant|adj|never stopping|Incessant rain flooded the roads.
+incipient|adj|just beginning|There are incipient signs of recovery.
+indolent|adj|lazy|An indolent student rarely passes.
+inevitable|adj|certain to happen|Change is inevitable.
+ingenuous|adj|innocent and candid|She gave an ingenuous smile.
+innocuous|adj|harmless|It was an innocuous question.
+insipid|adj|dull and flavorless|The soup was insipid.
+intransigent|adj|refusing to compromise|An intransigent negotiator ended the talks.
+inundate|v|to overwhelm with a large quantity|Emails inundated her inbox.
+irascible|adj|easily angered|He is an irascible boss.
+laconic|adj|using very few words|His laconic reply was simply, "Fine."
+laud|v|to praise|Teachers lauded her effort.
+lethargic|adj|sluggish|Heat makes me lethargic.
+loquacious|adj|talkative|She is a loquacious host.
+lucid|adj|clear and easily understood|He gave a lucid explanation.
+magnanimous|adj|generous in forgiving|She was a magnanimous winner.
+malleable|adj|easily shaped or influenced|Young minds are malleable.
+maverick|n|an independent thinker|He is a maverick entrepreneur.
+meticulous|adj|extremely careful|She keeps meticulous notes.
+mitigate|v|to lessen the severity of|Trees mitigate summer heat.
+mundane|adj|ordinary and everyday|He grew tired of mundane chores.
+nebulous|adj|vague|The plan was still nebulous.
+nefarious|adj|wicked|They uncovered a nefarious scheme.
+nonchalant|adj|casually calm|He seemed nonchalant before the exam.
+obdurate|adj|stubbornly refusing to change|She met the request with an obdurate refusal.
+obsequious|adj|excessively eager to please|The obsequious waiter bowed again.
+obsolete|adj|no longer in use|The software is now obsolete.
+obstinate|adj|stubbornly refusing to change|An obstinate child refuses to listen.
+ominous|adj|suggesting something bad will happen|Ominous clouds gathered overhead.
+opaque|adj|not transparent; hard to understand|The company's policies are opaque.
+ostentatious|adj|showy|He lives in an ostentatious mansion.
+pacify|v|to calm down|She pacified the crying baby.
+paragon|n|a perfect example|He is a paragon of honesty.
+parsimonious|adj|extremely stingy|A parsimonious landlord refused repairs.
+pedantic|adj|overly concerned with minor rules|A pedantic grammarian corrected every comma.
+penchant|n|a strong liking|She has a penchant for debate.
+perfunctory|adj|done without real interest|He gave a perfunctory nod.
+pernicious|adj|harmful in a subtle way|Pernicious rumors spread quickly.
+perspicacious|adj|mentally sharp|A perspicacious analyst saw the risk early.
+pervasive|adj|spreading everywhere|Pervasive noise made study hard.
+phlegmatic|adj|calm and not easily excited|He has a phlegmatic temperament.
+pithy|adj|concise and meaningful|The brand needs a pithy slogan.
+placate|v|to appease|He placated the customer with a refund.
+plausible|adj|believable|She offered a plausible excuse.
+pragmatic|adj|practical|We need a pragmatic solution.
+precarious|adj|unstable and dangerous|He stood on a precarious ledge.
+prodigal|adj|wastefully extravagant|The prodigal heir spent everything.
+prolific|adj|producing abundantly|She is a prolific writer.
+propitious|adj|favorable|It was a propitious time to invest.
+prudent|adj|wise and careful|A prudent investor diversifies.
+quixotic|adj|idealistic but impractical|It was a quixotic quest.
+recalcitrant|adj|resisting authority|A recalcitrant student ignored the rules.
+recluse|n|a person who avoids society|He lived as a recluse in the hills.
+redundant|adj|unnecessary and repetitive|Delete redundant words from the draft.
+refute|v|to prove wrong|She refuted the claim with data.
+reticent|adj|reluctant to speak|He was reticent about his past.
+reverent|adj|deeply respectful|A reverent silence filled the hall.
+rhetoric|n|persuasive language|Political rhetoric filled the debate.
+rigorous|adj|strict and thorough|The course involves rigorous testing.
+sagacious|adj|wise|She is a sagacious advisor.
+salient|adj|most noticeable or important|Let me list the salient points.
+sanguine|adj|optimistic|He is sanguine about the future.
+scrupulous|adj|careful about right and wrong|A scrupulous accountant checks every figure.
+serene|adj|calm and peaceful|The lake was serene at dawn.
+skeptical|adj|doubtful|Be skeptical of unverified rumors.
+solicit|v|to ask for|They solicited donations for the school.
+spurious|adj|false or fake|The report made spurious claims.
+squander|v|to waste|Do not squander your time.
+static|adj|not changing|Prices stayed static all year.
+stoic|adj|enduring pain without complaint|She gave a stoic reaction to the news.
+stringent|adj|strict|The bank has stringent rules.
+subtle|adj|delicate and hard to notice|There is a subtle difference between the two words.
+succinct|adj|briefly and clearly expressed|Send a succinct email.
+superfluous|adj|more than needed|Remove superfluous details.
+surreptitious|adj|secret and stealthy|He took a surreptitious glance at the answers.
+tacit|adj|understood without being said|They gave tacit approval.
+taciturn|adj|reserved in speech|The taciturn driver barely spoke.
+tenacious|adj|persistent|A tenacious learner never quits.
+tenuous|adj|weak or slight|The link between the two cases is tenuous.
+terse|adj|abrupt and brief|He sent a terse reply.
+timorous|adj|fearful|A timorous kitten hid under the bed.
+tirade|n|a long angry speech|He went on a tirade about delays.
+torpid|adj|inactive and sluggish|I feel torpid after a heavy lunch.
+tranquil|adj|peaceful|They live in a tranquil village.
+transient|adj|short-lived|Transient workers moved with the harvest.
+trepidation|n|nervous fear|He entered the room with trepidation.
+truculent|adj|aggressive and defiant|He was in a truculent mood.
+ubiquitous|adj|present everywhere|Smartphones are ubiquitous today.
+unwarranted|adj|unjustified|Her fears were unwarranted.
+vacillate|v|to waver between choices|She vacillated between the two offers.
+venerate|v|to respect deeply|Students venerate their old teacher.
+verbose|adj|using too many words|The report was verbose and dull.
+vindicate|v|to clear of blame or prove right|The results vindicated her theory.
+volatile|adj|liable to change rapidly|The market is volatile this week.
+zealous|adj|full of enthusiasm|She is a zealous volunteer.
+zenith|n|the highest point|He retired at the zenith of his career.`.split('\n').map(l=>{const p=l.split('|');return{w:p[0],pos:p[1],m:p[2],ex:p[3]}});
+
+const PREPS=`hanker|after|to long for|She hankers ___ a quiet life by the sea.
+abide|by|to follow a rule or decision|You must abide ___ the exam rules.
+accuse|of|to say someone did wrong|They accused him ___ cheating.
+adhere|to|to stick to a rule or belief|Please adhere ___ the deadline.
+apologize|for|to say sorry about something|I apologize ___ the delay.
+apply|for|to formally request a job or place|He applied ___ a scholarship.
+approve|of|to think something is good|Her parents approve ___ her plan.
+aspire|to|to have a strong ambition|She aspires ___ become a leader.
+attribute|to|to say something is caused by|He attributes his success ___ hard work.
+beware|of|to be careful about danger|Beware ___ pickpockets in the market.
+boast|of|to brag about|He boasted ___ his new car.
+capable|of|having the ability for|She is capable ___ great things.
+cater|to|to provide what is needed|The menu caters ___ all tastes.
+comply|with|to obey a rule|All students must comply ___ the policy.
+conducive|to|helping to bring about|Silence is conducive ___ study.
+consist|of|to be made up of|The team consists ___ five members.
+contribute|to|to give toward a common aim|Everyone contributed ___ the project.
+cope|with|to manage a difficulty|He coped ___ the pressure well.
+correspond|to|to match or be equivalent to|The result corresponds ___ our forecast.
+deal|with|to handle a task or problem|Managers deal ___ complaints daily.
+deprive|of|to take something away from|Noise deprived us ___ sleep.
+derive|from|to come from a source|The word derives ___ Latin.
+despair|of|to lose hope about|Do not despair ___ success.
+differ|from|to be unlike|His view differs ___ mine.
+dispense|with|to do without|We can dispense ___ the formalities.
+dispose|of|to get rid of|Dispose ___ waste properly.
+dissuade|from|to persuade not to do|She dissuaded him ___ quitting.
+engage|in|to take part in|They engaged ___ a long debate.
+exempt|from|free from a duty|Seniors are exempt ___ the fee.
+fond|of|having a liking for|She is fond ___ poetry.
+guilty|of|responsible for a wrong|He was found guilty ___ fraud.
+immune|to|protected against|He is immune ___ criticism.
+impose|on|to force something on someone|Do not impose your views ___ others.
+indifferent|to|not interested in|He seems indifferent ___ the result.
+infer|from|to conclude from evidence|We can infer a lot ___ the data.
+insist|on|to demand firmly|She insisted ___ paying the bill.
+inclined|to|likely or willing to|He is inclined ___ agree.
+jealous|of|resentful of someone's advantage|Do not be jealous ___ others.
+liable|to|likely to suffer or do|Glass is liable ___ break.
+long|for|to want very much|Migrants long ___ home.
+object|to|to oppose|I object ___ this proposal.
+participate|in|to take part|Everyone should participate ___ the discussion.
+prefer|to|to like better than|I prefer tea ___ coffee.
+prevail|over|to gain control or win|Truth will prevail ___ falsehood.
+prohibit|from|to forbid|The law prohibits drivers ___ texting.
+protest|against|to object publicly|Students protested ___ the fee hike.
+provide|with|to supply|The school provided us ___ books.
+recover|from|to get well after|He recovered ___ the flu quickly.
+refrain|from|to hold back from doing|Please refrain ___ smoking.
+rely|on|to depend on|You can rely ___ me.
+resort|to|to turn to as a last option|They resorted ___ force.
+result|in|to cause an outcome|Hard work results ___ success.
+result|from|to be caused by|Many errors result ___ haste.
+revolve|around|to have as the central focus|Her life revolves ___ her studies.
+subscribe|to|to agree with or sign up for|I subscribe ___ that view.
+succeed|in|to achieve a goal|She succeeded ___ passing the exam.
+suspect|of|to think someone guilty of|They suspected him ___ lying.
+sympathize|with|to feel sorry for|I sympathize ___ you.
+thrive|on|to grow well because of|He thrives ___ challenges.
+yearn|for|to long deeply for|She yearned ___ freedom.`.split('\n').map(l=>{const p=l.split('|');return{v:p[0],p:p[1],m:p[2],s:p[3]}});
+
+const TRANS=`সে প্রতিদিন সকালে হাঁটতে যায়।|He goes for a walk every morning.|Habitual action: simple present, 'goes for a walk'.
+আমি তিন বছর ধরে ইংরেজি শিখছি।|I have been learning English for three years.|'ধরে' with a time span: present perfect continuous with 'for'.
+বৃষ্টি হচ্ছিল বলে আমরা বাইরে যাইনি।|We did not go out because it was raining.|'বলে' as a reason: because.
+পরীক্ষার ফল শুনে সে খুশি হলো।|She was happy to hear the exam result.|'শুনে' becomes 'to hear' after an adjective of feeling.
+তুমি যদি কঠোর পরিশ্রম করো, তাহলে সফল হবে।|If you work hard, you will succeed.|First conditional: if + present, will + verb.
+আমি তাকে কাল দেখা করতে বলেছি।|I have asked him to meet me tomorrow.|ask + object + to-infinitive.
+সময় অর্থের চেয়েও মূল্যবান।|Time is more valuable than money.|Comparative with 'than'.
+সে আমার কাছ থেকে একটি বই ধার নিয়েছে।|He borrowed a book from me.|borrow from, lend to.
+আমি জানি না সে কোথায় থাকে।|I do not know where he lives.|Noun clause: keep statement word order after 'where'.
+ছাত্রটি এত ভালো যে সবাই তাকে পছন্দ করে।|The student is so good that everyone likes him.|so ... that for result.
+সে এলে আমি তাকে বলব।|I will tell him when he comes.|After 'when' use present, not 'will'.
+আজ রাতে আমাদের একটি সভা আছে।|We have a meeting tonight.|'আছে' as possession or schedule: have.
+তিনি একজন বিখ্যাত লেখক ছিলেন।|He was a famous writer.|Article 'a' before a consonant sound.
+আমি যদি পাখি হতাম, তাহলে উড়ে যেতাম।|If I were a bird, I would fly away.|Unreal condition: 'were' for all subjects.
+কাজটি শেষ না করা পর্যন্ত সে ঘুমায়নি।|He did not sleep until he finished the work.|not ... until.
+সত্য কথা বলা উচিত।|One should speak the truth.|'উচিত' becomes should.
+গরিবদের সাহায্য করা আমাদের কর্তব্য।|It is our duty to help the poor.|It is + noun + to-infinitive.
+সে ইংরেজিতে কথা বলতে ভয় পায়।|She is afraid of speaking in English.|afraid of + gerund.
+বইটি টেবিলের ওপর রাখা আছে।|The book is kept on the table.|Passive voice with 'on' for surface.
+আমরা সবাই একসঙ্গে খেলতে গিয়েছিলাম।|We all went to play together.|Past simple 'went' plus purpose infinitive.
+সে আমাকে সাহায্য করতে রাজি হয়েছে।|He has agreed to help me.|agree to + verb.
+দেরি হয়ে যাচ্ছে, আমাদের এখনই যেতে হবে।|It is getting late; we must go now.|'হতে হবে' as obligation: must or have to.
+যে বেশি পড়ে সে বেশি জানে।|He who reads more knows more.|Relative pronoun 'who' as subject.
+আমি তার কথায় বিশ্বাস করি না।|I do not believe his words.|Direct object, no preposition.
+পরিশ্রম ছাড়া কেউ সফল হতে পারে না।|No one can succeed without hard work.|'No one' already negative; do not add 'not'.
+সে এমনভাবে কথা বলে যেন সবকিছু জানে।|He talks as if he knew everything.|as if + past for unreal comparison.
+আমি ঢাকায় জন্মেছি এবং এখানেই বড় হয়েছি।|I was born in Dhaka and grew up here.|be born in; grew up (no 'was').
+তুমি কি আমার সঙ্গে যাবে?|Will you come with me?|Question order: Will + subject + verb.
+সে অসুস্থ থাকায় অফিসে আসেনি।|He did not come to the office as he was ill.|'থাকায়' as cause: as or because.
+আমার ইচ্ছা আমি একজন উদ্যোক্তা হব।|I aspire to become an entrepreneur.|aspire to + verb.
+এই কাজটি করতে আমার দুই ঘণ্টা সময় লাগবে।|It will take me two hours to do this work.|It takes + person + time + to-infinitive.
+ছাত্ররা শিক্ষকের কথা মনোযোগ দিয়ে শুনছে।|The students are listening to the teacher attentively.|listen to; present continuous.
+সে পরীক্ষায় প্রথম হয়েছে।|He stood first in the examination.|stand first; in the exam.
+নদীটি শহরের মধ্য দিয়ে বয়ে গেছে।|The river flows through the city.|through for movement inside.
+আমি তাকে চিনি, কিন্তু কখনো কথা বলিনি।|I know him, but I have never spoken to him.|never + present perfect; speak to.
+সময়মতো কাজ শেষ করা জরুরি।|It is important to finish work on time.|on time vs in time.
+সরকার নতুন একটি নীতি ঘোষণা করেছে।|The government has announced a new policy.|Present perfect for a recent result.
+যত তাড়াতাড়ি সম্ভব আমাকে জানাবেন।|Please let me know as soon as possible.|let me know: fixed polite phrase.
+সে ধনী হলেও সুখী নয়।|Though he is rich, he is not happy.|Though ... (no 'but' in the same sentence).
+ভালো ফল করার জন্য সে রাত জেগে পড়ছে।|He is studying late into the night to get a good result.|Purpose: to + verb.`.split('\n').map(l=>{const p=l.split('|');return{bn:p[0],en:p[1],tip:p[2]}});
+
+const PARTS=['of','to','for','on','in','with','from','by','at','after','against','over','about','around'];
+const TASKS=[['video','Video'],['vocab','5 words'],['prep','Prepositions'],['trans','Translation'],['quiz','Quiz']];
+
+/* ---------- state ---------- */
+const def=()=>({start:'2026-10-19',links:{},tasks:{},notes:{},quiz:{}});
+let S=def();
+try{const r=localStorage.getItem('e272');if(r)S=Object.assign(def(),JSON.parse(r))}catch(e){}
+function save(){try{localStorage.setItem('e272',JSON.stringify(S))}catch(e){}}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function parseDate(s){const[a,b,c]=s.split('-').map(Number);return new Date(a,b-1,c)}
+function dayDate(d){const x=parseDate(S.start);x.setDate(x.getDate()+d-1);return x}
+function fmt(d,long){return d.toLocaleDateString('en-GB',long?{weekday:'long',day:'numeric',month:'long',year:'numeric'}:{day:'numeric',month:'short',year:'numeric'})}
+function todayN(){const t=new Date();t.setHours(0,0,0,0);const n=Math.round((t-parseDate(S.start))/864e5)+1;return Math.min(TOTAL,Math.max(1,n))}
+let day=todayN();
+const T=d=>S.tasks[d]||(S.tasks[d]={});
+const complete=d=>TASKS.every(t=>T(d)[t[0]]);
+function stats(){
+  let vids=0,done=0;for(let d=1;d<=TOTAL;d++){if((S.tasks[d]||{}).video)vids++;if(complete(d))done++}
+  let streak=0,d=todayN();if(!complete(d))d--;while(d>=1&&complete(d)){streak++;d--}
+  const qs=Object.values(S.quiz);const avg=qs.length?Math.round(qs.reduce((a,q)=>a+q.s/q.t,0)/qs.length*100):null;
+  return{vids,done,streak,avg};
+}
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function shuffle(a,r){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const wordsFor=d=>[0,1,2,3,4].map(i=>WORDS[((d-1)*5+i)%WORDS.length]);
+const prepsFor=d=>[0,1].map(i=>PREPS[((d-1)*2+i)%PREPS.length]);
+const transFor=d=>[0,1].map(i=>TRANS[((d-1)*2+i)%TRANS.length]);
+const round=d=>Math.floor((d-1)*5/WORDS.length)+1;
+
+/* ---------- quiz ---------- */
+let Q=null;
+function buildQuiz(mode,d){
+  const r=mode==='day'?rng(d*7919):rng(Date.now()&0xffffff);
+  let ws,ps;
+  if(mode==='day'){ws=wordsFor(d);ps=prepsFor(d)}
+  else{const maxD=Math.max(todayN(),d);const pw=[],pp=[];for(let k=1;k<=maxD;k++){wordsFor(k).forEach(x=>pw.push(x));prepsFor(k).forEach(x=>pp.push(x))}
+    ws=shuffle([...new Set(pw)],r).slice(0,10);ps=shuffle([...new Set(pp)],r).slice(0,5)}
+  const items=[];
+  ws.forEach(w=>{const others=shuffle(WORDS.filter(x=>x.m!==w.m),r).slice(0,3).map(x=>x.m);
+    items.push({q:`What does <span class="hl">${esc(w.w)}</span> mean?`,opts:shuffle([w.m,...others],r),a:w.m,note:w.ex})});
+  ps.forEach(p=>{const others=shuffle(PARTS.filter(x=>x!==p.p),r).slice(0,3);
+    items.push({q:`Fill the blank: <span class="hl">${esc(p.v)} ___</span><br><span style="font-weight:500;font-size:18px">${esc(p.s)}</span>`,opts:shuffle([p.p,...others],r),a:p.p,note:`${p.v} ${p.p}: ${p.m}`})});
+  Q={mode,d,items:shuffle(items,r),i:0,score:0,picked:null,fin:false};
+}
+
+/* ---------- views ---------- */
+function tabs(){return[['today','Today'],['quiz','Quiz'],['library','Library'],['journey','Journey'],['setup','Setup']]}
+function link(d){return S.links[d]}
+function vidId(s){const m=s.match(/(?:v=|youtu\.be\/|shorts\/|embed\/)([A-Za-z0-9_-]{11})/);return m?m[1]:null}
+
+function vToday(){
+  const L=link(day),tk=T(day),ws=wordsFor(day),ps=prepsFor(day),tr=transFor(day),n=S.notes[day]||['','',''];
+  const watchUrl=L||CHANNEL;
+  return `
+  <div class="hero">
+    <div><div class="dayno">${day}<small>/ ${TOTAL}</small></div>
+      <div class="pager"><button class="btn sm" data-a="prev" ${day<=1?'disabled':''}>Previous</button><button class="btn sm" data-a="next" ${day>=TOTAL?'disabled':''}>Next</button><button class="btn sm" data-a="jumptoday">Go to today</button></div></div>
+    <div class="datebox"><b>${fmt(dayDate(day),true)}</b>${complete(day)?'<span class="ok">Day complete</span>':'Vocabulary round '+round(day)}</div>
+  </div>
+  <div class="chips">${TASKS.map(t=>`<span class="chip ${tk[t[0]]?'on':''}">${t[1]}</span>`).join('')}</div>
+
+  <section class="blk">
+    <h2>Video ${day}</h2>
+    <p class="sub">English Coach Chad &middot; opens on YouTube in a new tab</p>
+    ${L?`<a class="btn pri" href="${esc(watchUrl)}" target="_blank" rel="noopener">Open video ${day}</a>`
+       :`<p class="note">No link saved for day ${day}. Paste it below, or import all 272 links at once in Setup.</p><a class="btn" href="${CHANNEL}" target="_blank" rel="noopener">Open the channel</a>`}
+    <div class="row" style="margin-top:14px"><input type="text" id="linkin" placeholder="Paste this day's YouTube link" value="${esc(L||'')}" aria-label="YouTube link for day ${day}"><button class="btn sm" data-a="savelink">Save link</button></div>
+    <ul class="steps">
+      <li>Watch once without pausing.</li>
+      <li>Play it again and repeat every line out loud, matching the rhythm and accent.</li>
+      <li>Write the 3 phrases you want to keep.</li>
+    </ul>
+    <div class="stack">
+      ${[0,1,2].map(i=>`<input type="text" class="notein" data-i="${i}" placeholder="Phrase ${i+1} from this video" value="${esc(n[i]||'')}" aria-label="Phrase ${i+1}">`).join('')}
+    </div>
+    <p style="margin:16px 0 0"><button class="btn ${tk.video?'':'pri'}" data-a="task" data-t="video">${tk.video?'Video done (tap to undo)':'Mark video done'}</button></p>
+  </section>
+
+  <section class="blk">
+    <h2>5 words for today</h2>
+    <p class="sub">GRE, GMAT and Word Smart style. Say the word, guess, then tap to check. ${round(day)>1?'This is a revision round of earlier words.':''}</p>
+    <div class="stack">${ws.map(w=>`<details class="wc"><summary><span class="w">${esc(w.w)}</span><span class="pos">${esc(w.pos)}</span></summary><div class="body"><div>${esc(w.m)}</div><div class="ex">${esc(w.ex)}</div></div></details>`).join('')}</div>
+    <p style="margin:16px 0 0"><button class="btn ${tk.vocab?'':'pri'}" data-a="task" data-t="vocab">${tk.vocab?'Reviewed (tap to undo)':'I reviewed these 5'}</button></p>
+  </section>
+
+  <section class="blk">
+    <h2>Prepositions to own</h2>
+    <p class="sub">The small word is what competitive exams test.</p>
+    <div class="stack">${ps.map(p=>`<details class="wc"><summary><span class="w">${esc(p.v)} <span class="hl">${esc(p.p)}</span></span><span class="pos">tap</span></summary><div class="body"><div>${esc(p.m)}</div><div class="ex">${esc(p.s.replace('___',p.p))}</div></div></details>`).join('')}</div>
+    <p style="margin:16px 0 0"><button class="btn ${tk.prep?'':'pri'}" data-a="task" data-t="prep">${tk.prep?'Learned (tap to undo)':'I learned these 2'}</button></p>
+  </section>
+
+  <section class="blk">
+    <h2>Translate into English</h2>
+    <p class="sub">Write your own answer first, then check.</p>
+    <div class="stack">${tr.map((t,i)=>`<div><div class="bn">${esc(t.bn)}</div><textarea style="min-height:60px;margin:8px 0" placeholder="Your English translation" aria-label="Your translation ${i+1}"></textarea>
+      <details class="wc"><summary><span class="w" style="font-size:16px">Show answer</span></summary><div class="body"><div>${esc(t.en)}</div><div class="tip">${esc(t.tip)}</div></div></details></div>`).join('')}</div>
+    <p style="margin:16px 0 0"><button class="btn ${tk.trans?'':'pri'}" data-a="task" data-t="trans">${tk.trans?'Done (tap to undo)':'I finished both'}</button></p>
+  </section>
+
+  <section class="blk">
+    <h2>Quiz</h2>
+    <p class="sub">${tk.quiz&&S.quiz[day]?`Your score: ${S.quiz[day].s} of ${S.quiz[day].t}.`:'5 word questions and 2 preposition questions from today.'}</p>
+    <a class="btn pri" href="#quiz" data-a="startq" data-m="day">${S.quiz[day]?'Take it again':'Start today\'s quiz'}</a>
+  </section>`;
+}
+
+function vQuiz(){
+  if(!Q||Q.fin) {
+    const last=Q&&Q.fin?`<p class="ok" style="font-size:18px">Score: ${Q.score} of ${Q.items.length}</p>`:'';
+    return `<section class="blk"><h2>Quiz</h2><p class="sub">Pick a quiz. Questions come from the words and prepositions you have unlocked.</p>${last}
+      <div class="row"><button class="btn pri" data-a="startq" data-m="day">Day ${day} quiz</button><button class="btn" data-a="startq" data-m="review">Review quiz (15 questions)</button></div></section>`;
+  }
+  const it=Q.items[Q.i],ans=Q.picked!==null;
+  return `<section class="blk"><div class="qmeta"><span>${Q.mode==='day'?'Day '+Q.d:'Review'}</span><span>${Q.i+1} / ${Q.items.length}</span></div>
+    <div class="quizq">${it.q}</div>
+    <div class="opts">${it.opts.map((o,i)=>`<button class="opt ${ans?(o===it.a?'right':(i===Q.picked?'wrong':'')):''}" data-a="opt" data-i="${i}" ${ans?'disabled':''}>${esc(o)}</button>`).join('')}</div>
+    ${ans?`<p class="note" style="margin-top:14px">${esc(it.note)}</p><button class="btn pri" data-a="qnext">${Q.i+1>=Q.items.length?'See score':'Next question'}</button>`:''}</section>`;
+}
+
+function vLibrary(){
+  const maxD=Math.max(todayN(),day);const seen=new Set(),ws=[],ps=[];
+  for(let d=1;d<=maxD;d++){wordsFor(d).forEach(w=>{if(!seen.has(w.w)){seen.add(w.w);ws.push(w)}});prepsFor(d).forEach(p=>{if(!seen.has('p'+p.v+p.p)){seen.add('p'+p.v+p.p);ps.push(p)}})}
+  const phrases=[];Object.keys(S.notes).map(Number).sort((a,b)=>a-b).forEach(d=>(S.notes[d]||[]).forEach(x=>{if(x)phrases.push([d,x])}));
+  return `<section><h2>Words unlocked (${ws.length})</h2><p class="sub">Everything up to day ${maxD}.</p><input type="text" id="lsearch" placeholder="Search words or meanings" aria-label="Search library" style="margin-bottom:12px">
+    <div class="lib" id="wlist">${ws.map(w=>`<div class="libi" data-s="${esc((w.w+' '+w.m).toLowerCase())}"><p><span class="w" style="font-size:18px">${esc(w.w)}</span> <span class="pos">${esc(w.pos)}</span></p><p>${esc(w.m)}</p></div>`).join('')}</div></section>
+  <section><h2>Prepositions unlocked (${ps.length})</h2><div class="lib" style="margin-top:12px">${ps.map(p=>`<div class="libi"><p><span class="w" style="font-size:18px">${esc(p.v)} <span class="hl">${esc(p.p)}</span></span></p><p>${esc(p.m)}</p></div>`).join('')}</div></section>
+  <section><h2>Your phrase bank (${phrases.length})</h2><p class="sub">Phrases you wrote while watching.</p>${phrases.length?`<div class="lib">${phrases.map(x=>`<div class="libi"><p class="pos">Day ${x[0]}</p><p>${esc(x[1])}</p></div>`).join('')}</div>`:'<p class="note">Nothing yet. Add phrases on the Today page.</p>'}</section>`;
+}
+
+function vJourney(){
+  const s=stats(),t=todayN();let cells='';
+  for(let d=1;d<=TOTAL;d++){const c=complete(d)?'d':((S.tasks[d]||{}).video?'v':'');cells+=`<button class="cell ${c} ${d===t?'t':''}" data-a="goto" data-d="${d}" title="${fmt(dayDate(d))}" aria-label="Day ${d}">${d}</button>`}
+  const n=Object.keys(S.links).length;
+  return `<section><h2>Your 272 days</h2><p class="sub">Day 1 is ${fmt(dayDate(1))}. Day ${TOTAL} is ${fmt(dayDate(TOTAL))}.</p>
+    <div class="chips" style="margin-bottom:16px"><span class="chip">${s.vids} videos watched</span><span class="chip">${s.done} days complete</span><span class="chip">${s.streak} day streak</span><span class="chip">${s.avg===null?'No quizzes yet':'Quiz average '+s.avg+'%'}</span><span class="chip">${n} links saved</span></div>
+    <div class="grid">${cells}</div>
+    <div class="legend"><span><i style="background:var(--accent)"></i>All five tasks done</span><span><i style="background:color-mix(in srgb,var(--accent) 28%,var(--surface))"></i>Video done</span><span><i style="outline:2px solid var(--ink)"></i>Today</span></div></section>`;
+}
+
+function vSetup(){
+  return `<section class="blk"><h2>Start date</h2><p class="sub">Day 1 of 272. Your last day is ${fmt(dayDate(TOTAL))}.</p>
+    <input type="date" id="startin" value="${esc(S.start)}" aria-label="Start date" style="max-width:220px"></section>
+  <section class="blk"><h2>Import all video links</h2>
+    <p class="sub">Open the channel's Videos tab, copy each video link, and paste them here one per line in the order you want to watch them. Link 1 becomes Day 1, link 2 becomes Day 2, and so on.</p>
+    <textarea id="bulk" style="min-height:160px" placeholder="https://www.youtube.com/watch?v=...&#10;https://youtu.be/..." aria-label="Video links"></textarea>
+    <div class="row" style="margin-top:10px"><label for="bulkstart" class="note">Start at day</label><input type="number" id="bulkstart" value="1" min="1" max="${TOTAL}" style="max-width:100px"><button class="btn pri" data-a="import">Import links</button></div>
+    <p class="note" id="bulkmsg" role="status"></p></section>
+  <section class="blk"><h2>Backup</h2><p class="sub">Progress lives in this browser only. Copy the backup text somewhere safe, or paste it here to restore.</p>
+    <textarea id="backup" aria-label="Backup data">${esc(JSON.stringify(S))}</textarea>
+    <div class="row" style="margin-top:10px"><button class="btn sm" data-a="copyb">Copy backup</button><button class="btn sm" data-a="restore">Restore from text</button></div>
+    <p class="note" id="bmsg" role="status"></p></section>`;
+}
+
+/* ---------- render ---------- */
+function render(){
+  const tab=(location.hash||'#today').slice(1);const ok=tabs().map(t=>t[0]);const cur=ok.includes(tab)?tab:'today';
+  document.getElementById('nav').innerHTML=tabs().map(t=>`<a href="#${t[0]}" ${t[0]===cur?'aria-current="page"':''}>${t[1]}</a>`).join('');
+  const st=stats();
+  document.getElementById('stats').innerHTML=`<div><b>${st.vids}</b>videos</div><div><b>${st.streak}</b>streak</div>`;
+  document.getElementById('bar').style.width=(st.vids/TOTAL*100)+'%';
+  const v={today:vToday,quiz:vQuiz,library:vLibrary,journey:vJourney,setup:vSetup}[cur];
+  document.getElementById('main').innerHTML=v();
+}
+window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;
+  if(a==='prev'&&day>1){day--;render()}
+  else if(a==='next'&&day<TOTAL){day++;render()}
+  else if(a==='jumptoday'){day=todayN();render()}
+  else if(a==='goto'){day=+b.dataset.d;location.hash='#today';render();window.scrollTo(0,0)}
+  else if(a==='task'){const t=T(day);t[b.dataset.t]=!t[b.dataset.t];save();render()}
+  else if(a==='savelink'){const v=document.getElementById('linkin').value.trim();if(v){const id=vidId(v);S.links[day]=id?'https://www.youtube.com/watch?v='+id:v}else delete S.links[day];save();render()}
+  else if(a==='startq'){buildQuiz(b.dataset.m,day);if(location.hash!=='#quiz')location.hash='#quiz';else render()}
+  else if(a==='opt'){if(Q.picked===null){Q.picked=+b.dataset.i;if(Q.items[Q.i].opts[Q.picked]===Q.items[Q.i].a)Q.score++;render()}}
+  else if(a==='qnext'){Q.picked=null;Q.i++;if(Q.i>=Q.items.length){Q.fin=true;if(Q.mode==='day'){S.quiz[Q.d]={s:Q.score,t:Q.items.length};T(Q.d).quiz=true;save()}}render()}
+  else if(a==='import'){
+    const lines=document.getElementById('bulk').value.split('\n').map(x=>x.trim()).filter(Boolean);let d=Math.max(1,Math.min(TOTAL,+document.getElementById('bulkstart').value||1)),c=0;
+    lines.forEach(l=>{const id=vidId(l);if(id&&d<=TOTAL){S.links[d++]='https://www.youtube.com/watch?v='+id;c++}});save();
+    document.getElementById('bulkmsg').textContent=c?`Saved ${c} links, up to day ${d-1}. ${lines.length-c} lines were skipped.`:'No YouTube links found. Paste full video links, one per line.';
+  }
+  else if(a==='copyb'){const t=document.getElementById('backup');const m=document.getElementById('bmsg');
+    (navigator.clipboard?navigator.clipboard.writeText(t.value):Promise.reject()).then(()=>m.textContent='Copied.').catch(()=>{t.select();m.textContent='Select and copy the text above.'})}
+  else if(a==='restore'){const m=document.getElementById('bmsg');try{const o=JSON.parse(document.getElementById('backup').value);S=Object.assign(def(),o);save();m.textContent='Restored.';day=todayN()}catch(x){m.textContent='That text is not a valid backup.'}}
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.classList.contains('notein')){const n=S.notes[day]||(S.notes[day]=['','','']);n[+t.dataset.i]=t.value;save()}
+  else if(t.id==='lsearch'){const q=t.value.toLowerCase();document.querySelectorAll('#wlist .libi').forEach(x=>x.hidden=q&&!x.dataset.s.includes(q))}
+});
+document.addEventListener('change',e=>{if(e.target.id==='startin'&&e.target.value){S.start=e.target.value;save();day=todayN();render()}});
+render();
+</script>
+
+</body></html>
